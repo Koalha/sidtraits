@@ -1,0 +1,13 @@
+Package: sidtraits
+Title: Scraping seed traits from SID
+Version: 0.1.0
+Author: Konsta Happonen <konsta.happonen@gmail.com>
+Maintainer: Konsta Happonen <konsta.happonen@gmail.com>
+Description: Functions for scraping seed traits from the Royal Botanic Gardens
+    Kew Seed Information Database (SID, http://data.kew.org/sid/)
+Depends:
+    R (>= 3.1.0)
+Imports:
+    dplyr,stringr,XML
+License: GPL-2
+LazyData: true
