@@ -1,3 +1,8 @@
+sidtraits 0.1.1
+===============
+
+* removed require()'s from code
+
 sidtraits 0.1.0
 ===============
 

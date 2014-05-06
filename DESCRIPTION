@@ -1,6 +1,6 @@
 Package: sidtraits
 Title: Scraping seed traits from SID
-Version: 0.1.0
+Version: 0.1.1
 Author: Konsta Happonen <konsta.happonen@gmail.com>
 Maintainer: Konsta Happonen <konsta.happonen@gmail.com>
 Description: Functions for scraping seed traits from the Royal Botanic Gardens

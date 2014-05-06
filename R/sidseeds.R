@@ -18,9 +18,6 @@ sidspecurl = function(sciname, sepa = " ", single = FALSE){
 
 Sys.sleep(1)
 
-require(XML)
-require(stringr)
-
 old.options = options()
 on.exit(options(old.options))
 options(stringsAsFactors = FALSE)
@@ -79,7 +76,6 @@ return(out)
 
 traitextract = function(queryresult){
 Sys.sleep(1)
-require(XML)
 
 if(is.na(queryresult$href)){
 seed1000 = as.numeric(NA)
@@ -99,7 +95,6 @@ return(out)
 #' @import dplyr
 
 multiextract = function(queryresult){
-require(dplyr)
 dd = queryresult %.%
 group_by(1:nrow(queryresult)) %.%
 do(traitextract) %.%
