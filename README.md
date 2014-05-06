@@ -8,6 +8,14 @@ Currently, the only trait returned is 1000 seed weight, but more will be added s
 
 Author: [Konsta Happonen](https://github.com/Koalha/)
 
+### Installing
+Install `sidtraits` with devtools:
+```
+install.packages("devtools")
+library(devtools)
+install_github("sidtraits", "Koalha")
+library(sidtraits)
+```
 ### Functions
 
 `sidtraits` has one function: `sidseeds(sciname, sepa = " ", single = FALSE)`, which scrapes seed trait information from SID.
