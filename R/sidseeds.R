@@ -82,8 +82,9 @@ seed1000 = as.numeric(NA)
 } else { script = htmlTreeParse(queryresult$href, useInternalNodes = TRUE)	# end if, begin else
 seed1000 = as.numeric(xpathSApply(script, "//div[@id = 'sid']//text()[preceding-sibling::*[1][contains(.,'Average 1000 Seed Weight(g)')]]", xmlValue))
 } # end else
+if(length(seed1000) == 0){seed1000 = as.numeric(NA)}
 
-out = cbind(queryresult[, 1:2], seed1000)
+out = cbind(queryresult[1:2], seed1000)
 return(out)
 }
 
@@ -95,10 +96,12 @@ return(out)
 #' @import dplyr
 
 multiextract = function(queryresult){
-dd = queryresult %.%
-group_by(1:nrow(queryresult)) %.%
-do(traitextract) %.%
-rbind_all()
+dd = queryresult %>%
+    group_by(1:n()) %>%
+    do(traits = traitextract(.))
+
+dd = do.call(rbind,dd$traits)
+
 return(dd)
 }
 
