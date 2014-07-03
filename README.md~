@@ -25,6 +25,4 @@ library(sidtraits)
 `sepa` is the separator between genus and species names. For example: `sidseeds(sciname = "Betula_pendula", sepa = "_")`.
 
 `single` is a logical vector indicating, if the results of `sidseeds()` should be restricted to one species per entry in the `sciname`. If `single = FALSE`, `sidseeds()` returns traits for all taxons that partially match the queried binomial name, including variations and subspecies.
-With `single = TRUE` it will return only one result per binomial name
-queried. In this case all subspecies and variations are ignored unless there is
-no seed trait information for a higher taxon.
+`sidseeds()` has some rudimentary rules for identifying main level species with `single = TRUE` (has two spaces OR has '&' and four spaces), but you should always double-check the results.

@@ -1,3 +1,8 @@
+sidtraits 0.1.4
+
+* updated dplyr piping
+* fixed some issues with argument single = TRUE
+
 sidtraits 0.1.1
 ===============
 
@@ -6,4 +11,4 @@ sidtraits 0.1.1
 sidtraits 0.1.0
 ===============
 
-* new function sidseeds() queries SID for 1000 seed weights 
+* new function sidseeds() queries SID for 1000 seed weights
