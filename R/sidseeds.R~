@@ -127,3 +127,8 @@ urls = sidspecurls(sciname, sepa, single)
 result = multiextract(urls)
 return(result)
 }
+
+#' Strip a sidseeds() result to contain only one result per supplied binomial name
+#'
+#' This function tries to identify the best result from a sidseeds() search for
+#' each species queried, so that only one

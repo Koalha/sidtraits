@@ -16,7 +16,7 @@
 
 sidspecurl = function(sciname, sepa = " ", single = FALSE){
 
-Sys.sleep(1)
+Sys.sleep(0.5)
 
 old.options = options()
 on.exit(options(old.options))
@@ -35,9 +35,8 @@ speciesname = xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", g
 href = paste0("http://data.kew.org/sid/", xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", gsub(sepa, " ", sciname), "')]"), xmlAttrs))
 )
 
-if(single == TRUE){
-test = gsub("[(].*[)] ", "", out$species)
-out = suppressWarnings(out[sapply(test, str_count, " ") == 2 | (sapply(test, str_detect, "&") == TRUE & sapply(test, str_count, " ") == 4),])
+if(single == TRUE) {
+    out = single_me(out)
 }
 } else {	# end if species is found, begin if species not found
 out = data.frame(
@@ -75,7 +74,7 @@ return(out)
 #' @import XML
 
 traitextract = function(queryresult){
-Sys.sleep(1)
+Sys.sleep(0.5)
 
 if(is.na(queryresult$href)){
 seed1000 = as.numeric(NA)
@@ -128,7 +127,20 @@ result = multiextract(urls)
 return(result)
 }
 
-#' Strip a sidseeds() result to contain only one result per supplied binomial name
+#' Functionality for the option single = TRUE
 #'
-#' This function tries to identify the best result from a sidseeds() search for
-#' each species queried, so that only one
+#' This function is responsible for the proper functioning of single = TRUE
+#'
+#' @param x A sidspecurl result
+#' @import dplyr
+
+single_me = function(x){
+midtest1 = x[!str_detect(x$speciesname, "( var. )|( subsp. )"),] # remove rows that are variations or subspecies
+if(NROW(midtest1) == 0){midtest1 = x} # If all are var.s or subsp.s, revert
+if(NROW(midtest1) == 1){
+    return(midtest1)
+} else {
+    warning(paste0("More than one entry for ",x$call[1], " found with single = TRUE, using the first one\n Recommend using single = FALSE"))
+    return(midtest1[1,])
+}
+}
