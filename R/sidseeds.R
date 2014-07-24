@@ -76,16 +76,61 @@ return(out)
 traitextract = function(queryresult){
 Sys.sleep(0.5)
 
+seed1000 = numeric(1)
+zoochory = numeric(1)
+anemochory = numeric(1)
+hydrochory = numeric(1)
+autochory = numeric(1)
+barochory = numeric(1)
+atelochory = numeric(1)
+other_dispersal = numeric(1)
+desc_dispersal = character(1)
+
 if(is.na(queryresult$href)){
 seed1000 = as.numeric(NA)
+zoochory = as.numeric(NA)
+anemochory = as.numeric(NA)
+hydrochory = as.numeric(NA)
+autochory = as.numeric(NA)
+barochory = as.numeric(NA)
+atelochory = as.numeric(NA)
+other_dispersal = as.numeric(NA)
+desc_dispersal = as.character(NA)
 } else { script = htmlTreeParse(queryresult$href, useInternalNodes = TRUE)	# end if, begin else
 seed1000 = as.numeric(xpathSApply(script, "//div[@id = 'sid']//text()[preceding-sibling::*[1][contains(.,'Average 1000 Seed Weight(g)')]]", xmlValue))
-} # end else
-if(length(seed1000) == 0){seed1000 = as.numeric(NA)}
+dispersal = unique(xpathSApply(script, "//ol[preceding-sibling::span[1][child::b[contains(.,'Seed Dispersal')]]]/li/b", xmlValue))
 
-out = cbind(queryresult[1:2], seed1000)
+         disptest = function(input,output){
+             ifelse(any(dispersal == input),
+                    assign(output, 1, inherits = TRUE),
+                    assign(output, as.numeric(NA), inherits = TRUE))
+         }
+
+         disptest("Animal", "zoochory")
+         disptest("Wind", "anemochory")
+         disptest("Water", "hydrochory")
+         disptest("Methods originating from parent plant or diaspore", "autochory")
+         disptest("Unassisted", "barochory")
+         disptest("Dispersal prevented", "atelochory")
+
+         if(length(dispersal) > 0){
+             ifelse(!(any(dispersal %in% c("Animal", "Wind", "Water", "Methods originating from parent plant or diaspore", "Unassisted", "Dispersal prevented"))),
+                    assign("other_dispersal", 1, inherits = TRUE),
+                    assign("other_dispersal", as.numeric(NA), inherits = TRUE))
+         } else {assign("other_dispersal", as.numeric(NA), inherits = TRUE)}
+
+desc_dispersal = xpathSApply(script, "//ol[preceding-sibling::span[1][child::b[contains(.,'Seed Dispersal')]]]/li", xmlValue)
+     } # end else(that means url was found)
+if(length(seed1000) == 0){seed1000 = as.numeric(NA)}
+# Dispersal is covered in the former code block
+if(length(desc_dispersal) == 0){desc_dispersal = as.character(NA)}
+
+out = cbind(queryresult[1:2], seed1000, zoochory, anemochory, hydrochory, autochory, barochory, atelochory, other_dispersal)
+out$desc_dispersal = I(list(desc_dispersal)) # injecting lists to a data frame requires this
 return(out)
 }
+
+
 
 #' Extract seed traits from SID
 #'

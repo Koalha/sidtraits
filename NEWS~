@@ -1,9 +1,0 @@
-sidtraits 0.1.1
-===============
-
-* removed require()'s from code
-
-sidtraits 0.1.0
-===============
-
-* new function sidseeds() queries SID for 1000 seed weights 
