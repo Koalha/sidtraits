@@ -14,8 +14,8 @@ sidseeds(sciname, sepa = " ", single = FALSE)
 }
 \description{
 This function queries the Royal Botanic Gardens Kew Seed Information Database (SID, http://data.kew.org/sid/)
-for seed traits using plant species binomial names. Currently the function returns recognised names and average
-1000 seed masses.
+for seed traits using plant species binomial names. Currently the function returns recognised names, average
+1000 seed masses and principal dispersal agents.
 }
 \examples{
 sidseeds("Betula pendula")

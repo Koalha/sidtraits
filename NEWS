@@ -1,14 +1,16 @@
-sidtraits 0.1.4
+sidtraits 0.2.0
+===============
+* sidseeds() now also returns PDAs
 
+sidtraits 0.1.4
+===============
 * updated dplyr piping
 * fixed some issues with argument single = TRUE
 
 sidtraits 0.1.1
 ===============
-
 * removed require()'s from code
 
 sidtraits 0.1.0
 ===============
-
 * new function sidseeds() queries SID for 1000 seed weights

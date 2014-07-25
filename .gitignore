@@ -1,2 +1,4 @@
 temp.R
 *.R~
+*.Rmd~
+.Rhistory

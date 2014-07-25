@@ -8,12 +8,6 @@
 #' @import XML
 #' @import stringr
 
-
-## Later on ... make complete rules to identify different expressions after the
-## species name, and use them to restrict the results accurately to the species desired
-## Currently, the option 'single' searches for names that have 2 spaces (After genus
-## and before author), or with 2 authors.
-
 sidspecurl = function(sciname, sepa = " ", single = FALSE){
 
 Sys.sleep(0.5)
@@ -154,8 +148,8 @@ return(dd)
 #' Extract seed traits from SID using binomial names
 #'
 #' This function queries the Royal Botanic Gardens Kew Seed Information Database (SID, http://data.kew.org/sid/)
-#' for seed traits using plant species binomial names. Currently the function returns recognised names and average
-#' 1000 seed masses.
+#' for seed traits using plant species binomial names. Currently the function returns recognised names, average
+#' 1000 seed masses and principal dispersal agents.
 #' @param sciname A vector of one or more binomial names
 #' @param sepa Character separating genus and species names. Defaults to " "
 #' @param single Should the result be restricted to one species / queried name? Defaults to FALSE
