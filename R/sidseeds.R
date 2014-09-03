@@ -2,8 +2,8 @@
 #'
 #' This function checks if Seed Information Database has entries for a given
 #' binomial name, and returns the URL if an entry exists.
-#' @param sciname A binomial name
-#' @param sepa Character separating genus and species names. Defaults to " "
+#' @param sciname A binomial name if searching for at species level or the genus name
+#' @param sepa Character separating genus and species names for species-level searchs. Defaults to " "
 #' @param single Should the result be restricted to length one? Defaults to FALSE
 #' @import XML
 #' @import stringr
