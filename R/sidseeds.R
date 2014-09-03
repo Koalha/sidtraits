@@ -17,12 +17,35 @@ on.exit(options(old.options))
 options(stringsAsFactors = FALSE)
 
 species = strsplit(sciname, sepa)
-url = paste0("http://data.kew.org/sid/SidServlet?Clade=&Order=&Family=&APG=off&Genus=", species[[1]][1], "&Species=", species[[1]][2], "&StorBehav=0")
-script = htmlTreeParse(url, useInternalNodes = TRUE)
+GenusOnly <- length(species[[1]])==1
+
+cat("Searching for genus only: ", GenusOnly, "\n")
+
+## url is a function in the base package, so use a different name
+## url = paste0("http://data.kew.org/sid/SidServlet?Clade=&Order=&Family=&APG=off&Genus=", species[[1]][1], "&Species=", species[[1]][2], "&StorBehav=0")
+
+if (GenusOnly) {
+    urlSearch = paste0("http://data.kew.org/sid/SidServlet?Clade=&Order=&Family=&APG=off&Genus=", species[[1]][1], "&Species=&StorBehav=0")
+} else {
+    urlSearch = paste0("http://data.kew.org/sid/SidServlet?Clade=&Order=&Family=&APG=off&Genus=", species[[1]][1], "&Species=", species[[1]][2], "&StorBehav=0")
+}
+print("Search URL:")
+print(urlSearch)
+script = htmlTreeParse(urlSearch, useInternalNodes = TRUE)
+
+
+#print("Let's pause here"); browser()
+
+if (GenusOnly) {
+    numRecs <- length(xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", sciname, "')]"), xmlValue))
+} else {
+    numRecs <- length(xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", gsub(sepa, " ", sciname), "')]"), xmlValue))
+}
 
 # if species is found
-if(length(xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", gsub(sepa, " ", sciname), "')]"), xmlValue)) != 0) {
-
+if(numRecs != 0) {
+cat("Found ", numRecs, " records\n", sep="")
+    
 out = data.frame(
 call = sciname,
 speciesname = xpathSApply(script, paste0("//div[@id = 'sid']//a[contains(.,'", gsub(sepa, " ", sciname), "')]"), xmlValue),
@@ -42,8 +65,6 @@ href = as.character(NA)
 rownames(out) = NULL
 return(out)
 }
-
-
 
 #' Check URLs for binomial names in SID
 #'
