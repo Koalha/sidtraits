@@ -2,7 +2,7 @@
 #'
 #' This function checks if Seed Information Database has entries for a given
 #' binomial name, and returns the URL if an entry exists.
-#' @param sciname A binomial name if searching for at species level or the genus name
+#' @param sciname Either a binomial name if searching at the species level, or a single name if searching at Genus level. A vector of names will return results for all.
 #' @param sepa Character separating genus and species names for species-level searchs. Defaults to " "
 #' @param single Should the result be restricted to length one? Defaults to FALSE
 #' @import XML
@@ -166,19 +166,22 @@ return(dd)
 
 
 
-#' Extract seed traits from SID using binomial names
+#' Extract seed traits from SID using Genus and/or species names
 #'
 #' This function queries the Royal Botanic Gardens Kew Seed Information Database (SID, http://data.kew.org/sid/)
 #' for seed traits using plant species binomial names. Currently the function returns recognised names, average
 #' 1000 seed masses and principal dispersal agents.
-#' @param sciname A vector of one or more binomial names
+#' @param sciname A vector of one or more names (a binomial name when searching at species level; a single-word name when searching at Genus level) 
 #' @param sepa Character separating genus and species names. Defaults to " "
 #' @param single Should the result be restricted to one species / queried name? Defaults to FALSE
+#' @return A data frame
 #' @examples
 #' sidseeds("Betula pendula")
 #' sidseeds("Betula pendula", single = TRUE)
 #' sidseeds("Betula_pendula", sepa = "_")
 #' sidseeds(c("Betula pendula", "Anemone nemorosa"))
+#' sidseeds("Avena")  ## Genus search
+#' sidseeds(c("Avena", "Betula pendula"))  ## Mixed Genus and species search
 #' @export
 
 sidseeds = function(sciname, sepa = " ", single = FALSE){
