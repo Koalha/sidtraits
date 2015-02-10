@@ -1,1 +1,5 @@
 ^\.travis\.yml$
+.git
+.gitignore
+R/.Rhistory
+man/.Rhistory
